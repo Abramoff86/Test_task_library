@@ -11,7 +11,6 @@ class Book(Base):
     name = Column(String)
     author = Column(String)
     release_year = Column(Integer)
-    image_url = Column(String)
     ISBN = Column(String, unique=True, default = '')
     stock = Column(Integer, CheckConstraint("stock >= 0"))
 
