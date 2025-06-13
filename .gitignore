@@ -1,3 +1,8 @@
 .idea
 .venv
 config.py
+zav
+alembic.ini
+__pycache__/
+app/migrations/
+info.log
