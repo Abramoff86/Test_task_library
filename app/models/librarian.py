@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship
 
 
 
-class User(Base):
-    __tablename__ = 'users'
+class Librarian(Base):
+    __tablename__ = 'librarians'
 
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String)

@@ -1,0 +1,17 @@
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Float, CheckConstraint
+from sqlalchemy.orm import relationship
+
+from app.backend.db import Base
+
+
+class Book(Base):
+    __tablename__ = 'books'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    author = Column(String)
+    release_year = Column(Integer)
+    image_url = Column(String)
+    ISBN = Column(String, unique=True, default = '')
+    stock = Column(Integer, CheckConstraint("stock >= 0"))
+
