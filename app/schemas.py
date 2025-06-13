@@ -7,12 +7,11 @@ class CreateBook(BaseModel):
     ISBN: str
     stock: int
 
-
 class CreateReader(BaseModel):
     username: str
     email: str
 
-class CreateLibraria(BaseModel):
+class CreateLibrarian(BaseModel):
     first_name: str
     last_name: str
     email: str
