@@ -93,7 +93,7 @@ async def delete_books(db: Annotated[AsyncSession, Depends(get_db)], book_id: in
         )
 
 @router.put('/detail/{book_id}')
-async def update_product(db: Annotated[AsyncSession, Depends(get_db)], book_id: int,
+async def update_book(db: Annotated[AsyncSession, Depends(get_db)], book_id: int,
                          update_book_model: CreateBook, get_user: Annotated[dict, Depends(get_current_user)]):
     if get_user:
         if update_book_model.ISBN:

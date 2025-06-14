@@ -54,6 +54,24 @@ async def create_reader(db: Annotated[AsyncSession, Depends(get_db)], create_rea
         'transaction': 'Successful'
     }
 
+@router.put('/{reader_id}')
+async def update_reader(db: Annotated[AsyncSession, Depends(get_db)], up_reader: CreateReader, reader_id: int, get_user: Annotated[dict, Depends(get_current_user)]):
+    reader = await db.scalar(select(Reader).where(Reader.id == reader_id, Reader.is_active == True))
+    if reader is None:
+        raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='There is no reader found'
+             )
+    if get_user:
+        reader.username = up_reader.username
+        reader.email = reader.email
+        await db.commit()
+        return {
+            'status_code': status.HTTP_200_OK,
+            'transaction': 'Reader update is successful'
+        }
+
+
 
 @router.delete('/{reader_id}')
 async def delete_reader(db: Annotated[AsyncSession, Depends(get_db)], reader_id: int, get_user: Annotated[dict, Depends(get_current_user)]):
@@ -68,7 +86,7 @@ async def delete_reader(db: Annotated[AsyncSession, Depends(get_db)], reader_id:
         await db.commit()
         return {
             'status_code': status.HTTP_200_OK,
-            'transaction': 'Product delete is successful'
+            'transaction': 'Reader delete is successful'
         }
 
 
