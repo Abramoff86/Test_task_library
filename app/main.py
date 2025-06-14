@@ -1,5 +1,5 @@
 from app.models import librarian
-from app.routers import auth, book
+from app.routers import auth, book, readerm
 from loguru import logger
 from uuid import uuid4
 from fastapi import FastAPI, Request
@@ -33,3 +33,4 @@ async def welcome() -> dict:
 
 app.include_router(auth.router)
 app.include_router(book.router)
+app.include_router(readerm.router)
