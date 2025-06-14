@@ -4,7 +4,7 @@ class CreateBook(BaseModel):
     name: str
     author: str
     release_year: int
-    ISBN: str
+    ISBN: str | None = None
     stock: int
 
 class CreateReader(BaseModel):
