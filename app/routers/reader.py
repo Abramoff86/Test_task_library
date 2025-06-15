@@ -75,20 +75,25 @@ async def update_reader(db: Annotated[AsyncSession, Depends(get_db)], up_reader:
 
 @router.delete('/{reader_id}')
 async def delete_reader(db: Annotated[AsyncSession, Depends(get_db)], reader_id: int, get_user: Annotated[dict, Depends(get_current_user)]):
-    reader = await db.scalar(select(Reader).where(Reader.id == reader_id, Reader.is_active == True))
-    if reader is None:
-        raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail='There is no reader found'
-             )
     if get_user:
-        reader.is_active = False
-        await db.commit()
-        return {
-            'status_code': status.HTTP_200_OK,
-            'transaction': 'Reader delete is successful'
-        }
-
+        reader = await db.scalar(select(Reader).where(Reader.id == reader_id, Reader.is_active == True))
+        if reader is None:
+            raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail='There is no reader found'
+                 )
+        if get_user:
+            reader.is_active = False
+            await db.commit()
+            return {
+                'status_code': status.HTTP_200_OK,
+                'transaction': 'Reader delete is successful'
+            }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail='You are not authorized to use this method'
+        )
 
 
 
