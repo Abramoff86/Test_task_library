@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from typing import Annotated
 from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from datetime import date
 from app.models import Book, Reader
 from app.routers.auth import get_current_user
 
@@ -76,6 +76,7 @@ async def delete_borrow(db: Annotated[AsyncSession, Depends(get_db)], create_bor
                 detail='Reservation found'
             )
         brow.is_active = False
+        brow.return_date = date.today()
 
         book.stock = book.stock + 1
 
