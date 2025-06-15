@@ -1,5 +1,5 @@
 from app.backend.db import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Float, CheckConstraint
+from sqlalchemy import Column, Integer, String, CheckConstraint
 
 
 

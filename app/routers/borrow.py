@@ -92,3 +92,22 @@ async def delete_borrow(db: Annotated[AsyncSession, Depends(get_db)], create_bor
         )
 
 
+@router.get("/take/{reader_id}")
+async def get_all_books(db: Annotated[AsyncSession, Depends(get_db)], reader_id: int):
+    reader = await db.scalar(select(Reader).where(Reader.id == reader_id))
+    if not reader:
+        raise HTTPException(
+            status_code=status.HTTP_40r_FORBIDDEN,
+            detail='Reader not found'
+        )
+    bor = await db.scalars(select(Borrow.book_id).where(Borrow.is_active == True, Borrow.reader_id == reader_id))
+    pool = bor.all()
+    print(pool)
+    if bor:
+        book = await db.scalars(select(Book).where(Book.id.in_(pool)))
+        return book.all()
+
+    return HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail='There are no borrow'
+    )

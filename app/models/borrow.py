@@ -1,6 +1,6 @@
 from datetime import date
 from app.backend.db import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Float, Date
+from sqlalchemy import Column, ForeignKey, Integer, Boolean, Date
 
 
 class Borrow(Base):
