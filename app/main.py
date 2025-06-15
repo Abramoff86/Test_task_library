@@ -1,4 +1,4 @@
-from app.routers import auth, book, reader
+from app.routers import auth, book, reader, borrow
 from loguru import logger
 from uuid import uuid4
 from fastapi import FastAPI, Request
@@ -33,3 +33,4 @@ async def welcome() -> dict:
 app.include_router(auth.router)
 app.include_router(book.router)
 app.include_router(reader.router)
+app.include_router(borrow.router)
